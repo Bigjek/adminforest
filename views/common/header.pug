@@ -1,0 +1,7 @@
+ul.web
+    each i in social
+        +svg(i.url, i.class_name, i.name)
+.menu
+    button.menu__link.menu__link_b 
+        svg(class="icon" width="40" height="40")
+            use(xlink:href="assets/img/sprite.svg#hamburger") 

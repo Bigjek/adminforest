@@ -1,0 +1,19 @@
+footer.footer
+    .footer__top
+        .footer__info 
+            p Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. 
+        div.footer__menu
+            ul.footer-menu
+                each i in nav
+                    +navItemFooter(i.url, i.name)
+
+            ul.web.footer-web
+                each i in social
+                    +svg(i.url, i.class_name, i.name)
+
+        .footer__quote
+            blockquote.footer__quote_block Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает, где вы живете.
+                br
+                cite.footer__quote_author — Martin Golding         
+    .footer__bottom
+        .footer__bottom-copyright © Евгений Кочешков | Создано с любовью в LoftSchool | 2017

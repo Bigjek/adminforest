@@ -1,0 +1,96 @@
+extends ../template
+
+block variables
+  - var title = 'Обо мне'
+  - var nav = [{url:'my-works.html',name:'Мои работы'},{ url:'about.html',name:'Обо мне'},{ url:'my-blog.html',name:'Блог'},{url:'index.html' ,name:'Авторизация'}]
+  - var box = 'triangle-box' 
+  - var skill = [{title:'Frontend',list:[{title:'HTML',pro:'75'},{title:'CSS',pro:'80'},{title:'JavaScript & jQuery',pro:'75'}]},{title:'Backend', list:[{title:'PHP',pro:'35'},{title:'mySQL',pro:'50'},{title:'Node.js & npm',pro:'50'},{title:'Mongo.db',pro:'65'}]},{title:'Workflow', list:[{title:'Git',pro:'85'},{title:'Gulp',pro:'90'},{title:'Bower',pro:'70'}]}] 
+
+block content
+  .container
+    section.section.header
+      h2.visually-hidden Личный сайт веб разработчика
+      .header__top.header__top_p
+        include ../common/header.pug
+      .header__block
+        .section-title
+          svg(class="icon-lite" width="100%" height="260")
+            use(xlink:href="assets/img/sprite.svg#portfolio_header") 
+        .user.header__user
+          .user__block-images
+              img(src="./assets/img/logo.jpg", alt="logo").user__image
+          .user__description.user__description_l
+            .user__name.user__name_size Евгений Кочешков
+            .user__info Личный сайт веб разработчика
+        .arrow-down.arrow-down__btn_up
+          button.arrow-down__btn(data-href="#section")
+            svg(class="icon" width="28" height="28")
+              use(xlink:href="assets/img/sprite.svg#arrow_down") 
+    section.section.about#section
+      +tringleBox(box)
+      .about__block
+        .about__left
+          .about__left-title
+            .section-title
+              svg(class="icon-green" width="100%" height="120")
+                use(xlink:href="assets/img/sprite.svg#about_header") 
+            h1.block-title.block-title_gray-h #{title}
+          .about__left-content
+            .user-description
+              .user-description__image
+                img.user-description__avatar(src="assets/img/logo1.jpg", alt="")
+              .user-description__title
+                h2.block-subtitle.block-subtitle_gray Кто я
+              .user-description__text.text-content
+                p Я веб разработчик из Санкт-Петербурга. Мне 27 лет. Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
+                p Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+        .about__right
+          .about__right-title
+            h2.block-subtitle.block-subtitle_gray Чем я могу быть вам полезен
+          .about__right-text.text-content
+            p Больше всего меня привлекет Frontend разработка, но я также знаком и могу решать не сложные задачи на Backend. Но давайте по порядку.
+          .about__right-content
+            ul.skills-list
+              each item in skill
+                li.skills-list__item
+                  .skills-row
+                    .skills-row__title #{item.title}
+                    ul.skills-row__list
+                      each skill1 in item.list
+                        li.skill-hover.skills-row__item
+                          .skill__title #{skill1.title}
+                          +svgSkill('skill', skill1.pro)
+                          
+    section.section.map
+      .google-map
+        #map
+      .map__contacts
+        .contacts
+          .contacts__title
+            h2.block-subtitle.block-subtitle_gray.block-subtitle_m Контакты
+          ul.contacts__list
+            li.contacts__item
+              .contacts__icon
+                svg(class="icon-green-lite" width="25" height="25")
+                  use(xlink:href="assets/img/sprite.svg#skype") 
+              .contacts__block jekan2005u
+            li.contacts__item
+              .contacts__icon
+                svg(class="icon-green-lite" width="25" height="25")
+                  use(xlink:href="assets/img/sprite.svg#envelope2") 
+              .contacts__block ivapira@mail.ru
+            li.contacts__item
+              .contacts__icon
+                svg(class="icon-green-lite" width="25" height="25")
+                  use(xlink:href="assets/img/sprite.svg#phone2") 
+              .contacts__block +7 955 454 51 23
+            li.contacts__item
+              .contacts__icon
+                svg(class="icon-green-lite" width="25" height="25")
+                  use(xlink:href="assets/img/sprite.svg#map_marker") 
+              .contacts__block Санкт-Петербург
+
+  include ../common/footer.pug
+  include ../common/modal.pug
+block script
+  include ../common/maps.pug

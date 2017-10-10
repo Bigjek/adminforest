@@ -1,0 +1,49 @@
+extends ../template
+
+block variables
+  - var title = 'Блог'
+  - var nav = [{url:'my-works.html',name:'Мои работы'},{ url:'about.html',name:'Обо мне'},{ url:'my-blog.html',name:'Блог'},{url:'index.html' ,name:'Авторизация'}]
+  - var box = 'triangle-box-lite'
+block content
+  .container
+    section.section.header
+      h2.visually-hidden Статьи которые я написал
+      .header__top.header__top_p
+        include ../common/header.pug
+      .header__block
+        .user.header__user
+          .user__block-images
+              img(src="./assets/img/logo.jpg", alt="logo").user__image
+          .section-title.section-title_pos
+              svg(class="icon-lite" width="100%" height="240")
+                use(xlink:href="assets/img/sprite.svg#blog_header") 
+          .user__description.user__description_l
+            .user__name.user__name_max Блог
+            .user__info Статьи которые я написал
+        .arrow-down.arrow-down__btn_up
+          button.arrow-down__btn(data-href="#section")
+            svg(class="icon" width="28" height="28")
+              use(xlink:href="assets/img/sprite.svg#arrow_down") 
+            
+    section.section.blog#section
+      h2.visually-hidden Список статей которые я написал
+      +tringleBox(box)
+      .blog-block
+        aside.blog-block__left.blog-block__left_toggle
+          button.btn-aside.btn-aside_show
+          ul.aside-menu.aside-menu_fix
+            each index, i in articles
+              li.aside-menu__item
+                a.aside-menu__link(href=`#article0${i}` class=(i===0?"active":""))= index.title
+
+
+        .blog-block__right
+          each index, i in articles
+            article.blog-description(id = `article0${i}`)
+              h2.blog-description__title= index.title
+              .blog-description__date 
+                -var date= new Date(index.date).toLocaleDateString('ru', {  year: 'numeric', month: '2-digit', day: '2-digit'})
+                time.time(datetime="2017-09-15")= date
+              .blog-description__text.text-content= index.body
+  include ../common/footer.pug
+  include ../common/modal.pug

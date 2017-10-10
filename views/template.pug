@@ -1,0 +1,36 @@
+include common/mixin.pug
+
+block variables
+- var social = [{url:'https://vk.com', class_name:'icon-svg', name:'assets/img/sprite.svg#vk' },{ url:'https://github.com/Bigjek', class_name:'icon-svg', name:'assets/img/sprite.svg#github'},{ url:'#', class_name:'icon-svg', name:'assets/img/sprite.svg#in'}]
+
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title #{title}
+    meta(content="" name="description")
+    meta(content="" name="keywords")
+    meta(content="width=device-width, initial-scale=1" name="viewport")
+    meta(content="ie=edge" http-equiv="x-ua-compatible")
+    link(rel='stylesheet' href='./assets/styles/main.min.css')
+    <!--[if lt IE 9]>
+    script(src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js")
+    <![endif]-->
+    script(src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js")
+    script.
+      document.write('<script src="./assets/libs/js/TweenMax.min.js"><\/script>');
+    script(src="./assets/libs/js/three.min.js")
+    
+  body
+    #bg
+    .wrapper
+      block content
+    .preloader
+      .preloader__spinner
+        .preloader__animation
+        .preloader__percents 0%
+  script(src='//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+  script.
+    window.jQuery || document.write('<script src="./assets/libs/js/jquery.min.js"><\/script>');
+  block script
+  script(src='./assets/scripts/main.js')

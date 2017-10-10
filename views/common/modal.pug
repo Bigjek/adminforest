@@ -1,0 +1,8 @@
+#modalMenu.modal-menu
+    .modal-menu__blocks
+        .modal-menu__header
+            button.menu__link.menu__link_modal
+                svg(class="icon" width="40" height="40")
+                    use(xlink:href="assets/img/sprite.svg#close")
+        .modal-menu__content
+            +navMenu('modal-menu', nav)

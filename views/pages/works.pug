@@ -1,0 +1,160 @@
+extends ../template
+
+block variables
+  - var title = 'Мои работы'
+  - var nav = [{url:'my-works.html',name:'Мои работы'},{ url:'about.html',name:'Обо мне'},{ url:'my-blog.html',name:'Блог'},{url:'index.html' ,name:'Авторизация'}]
+  - var box = 'triangle-box-lite'
+block content
+  .container
+    section.section.header
+      h2.visually-hidden Личный сайт веб разработчика
+      .header__top.header__top_p
+        include ../common/header.pug
+      .header__block
+        .section-title
+          svg(class="icon-lite" width="100%" height="260")
+            use(xlink:href="assets/img/sprite.svg#portfolio_header") 
+        .user.header__user
+          .user__block-images
+              img(src="./assets/img/logo.jpg", alt="logo").user__image
+          .user__description.user__description_l
+            .user__name.user__name_size Евгений Кочешков
+            .user__info Личный сайт веб разработчика
+        .arrow-down.arrow-down__btn_up
+          button.arrow-down__btn(data-href="#section")
+            svg(class="icon" width="28" height="28")
+              use(xlink:href="assets/img/sprite.svg#arrow_down") 
+    section.section.work#section
+      +tringleBox(box)
+      .work__center
+        .section-title.section-title_m
+          svg(class="icon-green" width="100%" height="150")
+            use(xlink:href="assets/img/sprite.svg#works_header")
+        .work__title
+          h1.block-title.block-title_gray-h #{title}
+      .work__block.slider
+        .work__left
+          .slider-inform
+        .work__right
+          .slider-list
+            ul.slider-list__content
+              li.slider-list__item.active
+                img.slider-list__img(src="assets/img/other/slide1.jpg", alt="1")
+                .slider-desc
+                  .site-school
+                    .site-school__title
+                      h2.block-subtitle.block-subtitle_gray Сайт школы онлайн образования1
+                    .site-school__description HTML, CSS, JAVASCRIPT
+                    .site-school__link
+                      a(href='#', class='btn-link btn-link_green')
+                        svg(class="icon-white" width="20" height="20")
+                          use(xlink:href="assets/img/sprite.svg#link")
+                        span.site-school__text Посмотреть сайт
+
+
+              li.slider-list__item
+                img.slider-list__img(src="assets/img/other/slide2.jpg", alt="2")
+                .slider-desc
+                  .site-school
+                    .site-school__title
+                      h2.block-subtitle.block-subtitle_gray Сайт школы онлайн образования2
+                    .site-school__description HTML, CSS, JAVASCRIPT
+                    .site-school__link
+                      a(href='#', class='btn-link btn-link_green')
+                        svg(class="icon-white" width="20" height="20")
+                          use(xlink:href="assets/img/sprite.svg#link")
+                        span.site-school__text Посмотреть сайт
+
+              li.slider-list__item
+                img.slider-list__img(src="assets/img/other/slide3.jpg", alt="3")
+                .slider-desc
+                  .site-school
+                    .site-school__title
+                      h2.block-subtitle.block-subtitle_gray Сайт школы онлайн образования3
+                    .site-school__description HTML, CSS, JAVASCRIPT
+                    .site-school__link
+                      a(href='#', class='btn-link btn-link_green')
+                        svg(class="icon-white" width="20" height="20")
+                          use(xlink:href="assets/img/sprite.svg#link")
+                        span.site-school__text Посмотреть сайт
+
+              li.slider-list__item
+                img.slider-list__img(src="assets/img/other/slide4.jpg", alt="4")
+                .slider-desc
+                  .site-school
+                    .site-school__title
+                      h2.block-subtitle.block-subtitle_gray Сайт школы онлайн образования4
+                    .site-school__description HTML, CSS, JAVASCRIPT
+                    .site-school__link
+                      a(href='#', class='btn-link btn-link_green')
+                        svg(class="icon-white" width="20" height="20")
+                          use(xlink:href="assets/img/sprite.svg#link")
+                        span.site-school__text Посмотреть сайт
+
+        .work__btn
+          .slider-btn
+            button.slider-btn__control.slider-btn__control_left
+              .bg-left.slider-list-mini
+              svg(class="icon" width="45" height="45")
+                use(xlink:href="assets/img/sprite.svg#portf_arrow_down") 
+            button.slider-btn__control.slider-btn__control_right
+              .bg-right.slider-list-mini
+              svg(class="icon" width="45" height="45")
+                use(xlink:href="assets/img/sprite.svg#portf_arrow_up") 
+    section.section.speak
+      .speak-center
+        .section-title.section-title_m
+          svg(class="icon-green" width="100%" height="150")
+            use(xlink:href="assets/img/sprite.svg#about_header")
+        .speak-center__title
+          h2.block-title.block-title_gray-h.block-title_s Что обо мне говорят
+        .speak-center__content
+          ul.comment-list
+            li.comment-list__item
+              .comment-list__images
+                img(src="assets/img/com.png", alt="").comment-list__img
+              .comment-list__content.text-content
+                .comment-list__content_p
+                  svg(class="icon-green" width="80" height="80")
+                    use(xlink:href="assets/img/sprite.svg#quotes") 
+                blockquote.comment-list__content_s 
+                  p Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
+                  cite.comment-list__author Ковальчук Дмитрий
+                    .comment-list__status — основатель Loftschool 
+            li.comment-list__item
+              .comment-list__images
+                img(src="assets/img/logo.jpg", alt="").comment-list__img
+              .comment-list__content.text-content
+                .comment-list__content_p
+                  svg(class="icon-green" width="80" height="80")
+                    use(xlink:href="assets/img/sprite.svg#quotes") 
+                blockquote.comment-list__content_s
+                  p Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
+                  cite.comment-list__author Ковальчук Дмитрий
+                    .comment-list__status — основатель Loftschool 
+        .speak-center__form
+          form.form-contact.form-contact_w#contact(action="")
+            .form-contact__top
+              h2.block-subtitle.block-subtitle_gray.block-subtitle_f Связяться со мной
+              .input-group.input-group__block
+                label.visually-hidden(for="name")
+                input.form-contact__name.form-contact__name_b(type="text", name="name", placeholder="Имя", id="name")
+              .input-group.input-group__block
+                label.visually-hidden(for="email")
+                input.form-contact__email.form-contact__email_b(type="email", name="email" placeholder="Email", id="email")
+              .input-group.input-group__block
+                label.visually-hidden(for="description")
+                textarea.form-contact__text.form-contact__text_b(name="msg", cols="30", rows="6",placeholder="Ваше сообщение", id="description")
+            .form-contact__btn
+              button.form-contact__sub(type="submit") Отправить
+              button.form-contact__clear(type="reset") Очистить
+        .arrow-down
+          button.arrow-down__btn.arrow-down__btn_down
+            svg(class="icon" width="28" height="28")
+              use(xlink:href="assets/img/sprite.svg#portf_arrow_up") 
+    .modal-success
+      .modal-success__text Сообщение отправлено
+      button.btn-modal.btn-link_green(type="button") Закрыть 
+  include ../common/footer.pug
+  
+  include ../common/modal.pug

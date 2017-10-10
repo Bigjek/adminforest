@@ -1,0 +1,75 @@
+extends ../template
+
+block content
+  .header
+    .container.admin
+      h1.header__title Admin panel
+      a.header__link(href="/") Вернуться на сайт
+  .admin-container
+    .col
+      .form-container
+        form.form#upload(action='/admin/avatar' method="POST" enctype="multipart/form-data")
+          .form__subtitle Загрузите картинку на сервер
+          if (msgfile)
+            .status= msgfile
+          label.form__input-line
+            input(name="name" type="text" placeholder="Описание картинки").form__input#file-desc
+          label.form__input-line
+            input(name="photo" type="file" required accept="image/*").form__input#file-select
+          .form__btns.form__input-line
+            input(name="" type="submit" value="Отправить").form__btn-send
+            input(name="" type="reset" value="Очистить").form__btn-reset
+    .col
+      .form-container
+        form.form#blog(action='/admin/blog' method="POST" enctype="application/x-www-form-urlencoded")
+          .form__subtitle Добавить запись в блог
+          if (msgblog)
+            .status= msgblog
+          label.form__input-line
+            input(name="title" type="text" placeholder="Заголовок").form__input
+          label.form__input-line
+            - 
+              var data = new Date().toLocaleDateString('ru', { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit'
+                })
+            input(name="date" type="date" value=`${data}`).form__input
+          textarea(placeholder="Ваша запись" name="text").form__textarea
+          .form__btns.form__input-line
+            input(name="" type="submit" value="Отправить").form__btn-send
+            input(name="" type="reset" value="Очистить").form__btn-reset
+
+    .col
+      .form-container
+        form.form#upload1(action='/admin/work' method="POST" enctype="application/x-www-form-urlencoded")
+          .form__subtitle Загрузите картинку на сервер
+          if (msgwork)
+            .status= msgwork
+          label.form__input-line
+            input(name="title" type="text" placeholder="Описание картинки").form__input#file-desc
+          label.form__input-line
+            input(name="tech" type="text" placeholder="Описание картинки").form__input#file-desc1
+          label.form__input-line
+            input(name="link" type="text" placeholder="Описание картинки").form__input#file-desc2
+          label.form__input-line
+            input(name="file" type="text" placeholder="Описание картинки").form__input#file-desc3
+
+          .form__btns.form__input-line
+            input(name="" type="submit" value="Отправить").form__btn-send
+            input(name="" type="reset" value="Очистить").form__btn-reset
+    .col
+      .form-container
+        form.form#about(action='/admin/about' method="POST" enctype="application/x-www-form-urlencoded")
+          .form__subtitle Загрузите картинку на сервер
+          if (msgabout)
+            .status= msgabout
+          label.form__input-line
+            input(name="title" type="text" placeholder="Название").form__input#file-about
+          label.form__input-line
+            input(name="perc" type="text" placeholder="Проценты").form__input#file-about1
+          label.form__input-line
+            input(name="type" type="text" placeholder="Тип").form__input#file-about2
+          .form__btns.form__input-line
+            input(name="" type="submit" value="Отправить").form__btn-send
+            input(name="" type="reset" value="Очистить").form__btn-reset

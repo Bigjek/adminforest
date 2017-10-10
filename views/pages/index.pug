@@ -1,0 +1,216 @@
+extends ../template
+
+block variables
+    - var title = 'Добро пожаловать'
+    - var navList = [{url:'my-works.html',name:'Мои работы'},{ url:'about.html',name:'Обо мне'},{ url:'my-blog.html',name:'Блог'}]
+    - var menu = 'navigate'
+block content
+
+    div.header-login
+        .header-login__btn
+            button(class='btn-link btn-link_opacity', id='auth') Авторизоваться
+    main.main
+        .flipper
+            .main-center
+                .front
+                    .main-center__content.main-center__content_f
+                        .user.main__user
+                            .user__block-images
+                                img(src="./assets/img/logo.jpg", alt="logo").user__image
+                            .user__description
+                                .user__name Евгений Кочешков
+                                .user__info Личный сайт веб разработчика
+                            ul.web.main-web
+                                each i in social
+                                    +svg(i.url, i.class_name, i.name)
+                    .main-center__footer
+                        nav.navigate
+                            +navMenu(menu, navList)
+
+                .back
+                    .main-center__content
+                        form.form-contact#authfo(action='/login' method="POST")
+                            h2.block-subtitle.block-subtitle_white.form-contact_auth-title Авторизуйтесь
+                            .input-group.input-group__block
+                                .input-group__icon
+                                    span.input-group__login
+                                        svg(class="icon" width="18" height="18")
+                                            use(xlink:href="assets/img/sprite.svg#login")
+                                    label.visually-hidden(for="login")
+                                    input.form-contact__name(type="text" name="login" placeholder="Логин" id="login")
+                            .input-group.input-group__block
+                                .input-group__icon
+                                    span.input-group__pass
+                                        svg(class="icon" width="18" height="18")
+                                            use(xlink:href="assets/img/sprite.svg#password") 
+                                    label.visually-hidden(for="password")
+                                    input.form-contact__email(type="password" name="password" placeholder="Пароль" id="password")
+                            .input-group.input-group__block
+                                input.form-contact__check(type="checkbox" name="children" id="children" checked)
+                                label.form-contact__check-label(for="children") Я человек
+                            .input-group.input-group__block
+                                .form-login
+                                    .form-login__check Вы точно не робот?
+                                input.form-contact__radio(type="radio" name="robot" value="1" id="yes" checked) 
+                                label.form-contact__radio-label(for="yes") Да
+                                input.form-contact__radio(type="radio" name="robot" value="0" id="no") 
+                                label.form-contact__radio-label(for="no") Не уверен
+                            nav.navigate.navigate_m
+                                ul.navigate__block
+                                    li.navigate__item
+                                        button.navigate__link.navigate__link_style(type="button" id="mainIndex") Главная
+                                    li.navigate__item    
+                                        button.navigate__link.navigate__link_style(type="submit" id="sub") Войти    
+                
+                    
+    footer.footer
+        .footer__bottom.footer__bottom_opacity 
+            .footer__bottom-copyright © Евгений Кочешков | Создано с любовью в LoftSchool | 2017
+
+block script
+    script(id="vertexShader" type="x-shader/x-vertex")
+        .
+            varying vec2 v_position;
+            uniform vec2 u_size;
+            uniform vec2 u_resolution;
+            attribute vec2 a_pos; 
+            void main() {
+                    v_position = (position.xy+1.0)*0.5;
+                    gl_Position =  vec4(position, 1.0);            
+            }
+    script(id="fragmentShader" type="x-shader/x-fragment")
+        .
+            uniform float u_time;
+            varying vec2 v_position;
+            uniform sampler2D u_image;
+            uniform sampler2D u_maps;
+            uniform vec2 u_mouse;
+            uniform float u_dpi;
+            uniform vec2 u_resolution;
+
+
+            vec2 pos(){
+            return vec2(0.0,0.0);
+            }
+            
+            vec4 blend(vec4 bg,vec4 fg){
+            vec3 bgm=bg.rgb*bg.a;
+            vec3 fgm=fg.rgb*fg.a;
+            float ia=1.0-fg.a;
+            float a=(fg.a + bg.a * ia);
+            vec3 rgb;
+            if(a!=0.0){
+                rgb=(fgm + bgm * ia) / a;
+            }else{
+                rgb=vec3(0.0,0.0,0.0);
+            }
+            return vec4(rgb,a);
+            }
+            vec2 pixel(){
+            return vec2(1.0*1.0)/u_resolution;
+            }
+            float wave(float x,float freq, float speed){
+            return sin(x*freq+((u_time*(3.1415/2.0))*speed));
+            }
+            vec2 waves(vec2 pos){
+            vec4 maps=texture2D(u_maps,pos);
+            float mask=maps.r;
+            float y=maps.g;
+            float y2=pow(y,2.0);
+            
+            vec2 intensity=vec2(
+                0.5-(y2*0.5),
+                0.2+(y2*1.8)
+            )*pixel();
+            
+            vec2 waves=vec2(
+                wave(y,400.0-(y2*200.0),-0.03), 
+                wave(y,400.0-(y2*400.0*0.05),-0.045)
+                +wave(y,900.0-(y2*900.0*0.05),-0.05)
+                +wave(pos.x,20.0+(y2*20.0*1.5),-0.01)
+            );
+            return pos+(waves*intensity*mask);
+            }
+            vec2 depth(vec2 pos){
+            vec2 intensity=vec2(0.01,0.01);
+            float d=0.05-pow(texture2D(u_maps,pos).b,1.0);
+            return pos+(intensity*u_mouse*d);
+            }
+
+            void main(){
+                vec2 pos=v_position.xy;    
+                vec2 turbulence=depth(waves(pos));
+                vec2 noTurbulence=depth(pos);
+                vec4 c=texture2D(u_image,turbulence);
+
+                gl_FragColor=vec4(c.rgb,1.0);
+            } 
+    script
+        .
+            var container;
+            var camera, scene, renderer;
+            var uniforms;
+            var mouse = {x:0, y:0};
+            var loader = new THREE.TextureLoader();
+
+            init();
+            animate();
+            
+            function init() {
+                container = document.getElementById( 'bg' );
+                
+                camera = new THREE.Camera();
+                //camera = new THREE.PerspectiveCamera(145, window.innerWidth / window.innerHeight, 1, 5000 );
+                camera.position.z = 1;
+                scene = new THREE.Scene();
+                var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+
+                var MyTexture = loader.load( "./assets/img/water.jpg" );
+                var mapTexture = loader.load( "./assets/img/water-maps.jpg" );
+                MyTexture.minFilter = THREE.LinearFilter;
+
+                uniforms = {
+                    u_time: { type: "f", value: 1.0 },
+                    u_animation: { type: "f", value: 0.0 },
+                    u_mouse: { type: "v2", value: new THREE.Vector2() },
+                    u_resolution: { type: "v2", value: new THREE.Vector2() },
+                    u_size: {type:"v2", value: new THREE.Vector2(MyTexture.image.width,MyTexture.image.height) },
+                    u_image: {value:MyTexture },
+                    u_maps: {value:mapTexture}
+                };
+                var material = new THREE.ShaderMaterial( {
+                    uniforms: uniforms,
+                    vertexShader: document.getElementById( 'vertexShader' ).textContent,
+                    fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+                } );
+                var mesh = new THREE.Mesh( geometry, material );
+                scene.add( mesh );
+                renderer = new THREE.WebGLRenderer();
+                renderer.setPixelRatio( window.devicePixelRatio );
+                
+                container.appendChild( renderer.domElement );
+                onWindowResize();
+                window.addEventListener( 'resize', onWindowResize, false );
+            }
+            function onWindowResize( event ) {
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                uniforms.u_resolution.value.x = renderer.domElement.width;
+                uniforms.u_resolution.value.y = renderer.domElement.height;
+                uniforms.u_mouse.value.x = mouse.x;
+                uniforms.u_mouse.value.y = mouse.y;
+            }
+            function animate() {
+                requestAnimationFrame( animate );
+                render();
+            }
+            function render() {
+                uniforms.u_time.value += 1.0;
+                renderer.render( scene, camera );
+            }
+
+            document.addEventListener('mousemove',function(event){
+                TweenLite.to(uniforms.u_mouse.value, 1, {
+                    x: ((event.pageX / window.innerWidth) - 0.5) * 1.5,
+                    y: ((event.pageY / window.innerHeight)- 0.5) * 1.5
+                })
+            })

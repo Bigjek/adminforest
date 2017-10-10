@@ -1,0 +1,26 @@
+mixin navItemFooter(url, name)
+    li.footer-menu__item
+        a.footer-menu__link(href=url)= name
+
+mixin svg(url, class_name, name)
+    li.web__items.web__items_l
+        a(href=url class='web__link web__link_l' target="_blank")
+            svg(class=class_name)
+                use(xlink:href=name)
+
+mixin navMenu(className, navList)
+    ul(class= className + '__block')
+        each i in navList
+            li(class= className + '__item')
+                a(class= className + '__link' href=i.url)= i.name
+
+mixin tringleBox(box)
+    div(class= box)
+        svg(xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1000 85" preserveaspectratio="none" class="traingle")
+            polygon(class = "left" points="0,0   0,86   500.8,86   500.8,75.5")
+            polygon(class = "right" points="1000,0   1000,86   500,86   500,75.5")
+
+mixin svgSkill(class_name, number)
+    svg(class= class_name + "__circle" viewBox="0 0 110 110")
+        circle(r="45" cx="50%" cy="50%" fill="none" class= class_name + "__first" )
+        circle(r="45" cx="50%" cy="50%" fill="none" transform="rotate(-90 55 55)" class= class_name + "__second " + class_name + "-" + number )
