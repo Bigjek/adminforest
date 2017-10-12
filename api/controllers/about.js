@@ -14,8 +14,8 @@ module.exports.createAbout = function (req, res) {
   const Model = mongoose.model('about');
 
   let item = new Model({
-    title: req.body.title,
-    perc: req.body.perc,
+    name: req.body.name,
+    percents: req.body.percents,
     type: req.body.type
   });
   //сохраняем запись в базе
@@ -45,8 +45,8 @@ module.exports.editAbout = function (req, res) {
   const id = req.params.id;
 
   let data = {
-    title: req.body.title,
-    perc: req.body.perc,
+    name: req.body.name,
+    percents: req.body.percents,
     type: req.body.type
   };
 

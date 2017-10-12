@@ -3,11 +3,11 @@
 const mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   AboutSchema = new Schema({
-    title: {
+    name: {
       type: String,
       required: [true, 'Укажите название']
     },
-    perc: {
+    percents: {
       type: String,
       required: [true, 'Укажите процент']
     },
